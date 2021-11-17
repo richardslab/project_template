@@ -13,15 +13,15 @@ set +eu \
   && conda install -y -c conda-forge mamba 
 
 conda deactivate || echo "No active environment"
-conda env remove -n ${ENV} || echo "Couldn't remove environment ${ENV}"
-conda create -y -n ${ENV}  || echo "It seem that environment ${ENV} is already present"
+conda env remove -n "${ENV}" || echo "Couldn't remove environment ${ENV}"
+conda create -y -n "${ENV}"  || echo "It seem that environment ${ENV} is already present"
 
 set -ex
 
-mamba env update -n ${ENV} -q \
+mamba env update -n "${ENV}" -q \
 	--file "$BASEDIR"/environment.yml 
 
-echo CREATED the environment ${ENV}
+echo CREATED the environment "${ENV}"
 
 conda init bash
-echo "conda activate ${ENV}" >> ~/.bashrc
+echo "conda activate \"${ENV}\"" >> ~/.bashrc
