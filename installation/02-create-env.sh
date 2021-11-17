@@ -4,6 +4,8 @@ BASEDIR="$(dirname "$0")"
 
 ENV=$1
 
+echo ENV=$ENV
+
 
 # shellcheck source=/dev/null
 set +eu \
