@@ -35,7 +35,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - run: |
-      echo ${{env.dockerhub_repo}}
-      echo ${{env.dockerhub_image}}
+        echo ${{env.dockerhub_repo}}
+        echo ${{env.dockerhub_image}}
 
 
