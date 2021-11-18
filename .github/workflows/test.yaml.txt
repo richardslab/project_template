@@ -1,4 +1,4 @@
- {
+{
    "dockerhub_repo": "test1"
    "dockerhub_image_name": "test2"
 }

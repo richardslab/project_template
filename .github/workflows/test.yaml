@@ -18,6 +18,5 @@ jobs:
         cat .github/workflows/test.yaml.txt >> $GITHUB_ENV
         echo 'EOF' >> $GITHUB_ENV
         cat $GITHUB_ENV
-        echo ""
     - name: use setup variables
       run: echo "${{env.SETUP_YAML}}"
