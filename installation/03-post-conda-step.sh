@@ -3,6 +3,8 @@
 ## run post-conda steps
 BASEDIR="$(dirname "$0")"
 
+ENV=$1
+
 
 echo BASEDIR="$BASEDIR"
 echo RUNNING post-conda steps
@@ -11,9 +13,13 @@ echo RUNNING post-conda steps
 set +e \
   && PS1='$$$ ' \
   && . "$(conda info --base)"/etc/profile.d/conda.sh \
-  && conda activate base 
+  && conda activate ${ENV} 
 
 set -e
+
+conda info 
+conda list
+
 
 git clone https://github.com/lindenb/jvarkit.git
 pushd jvarkit

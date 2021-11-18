@@ -28,7 +28,7 @@ RUN echo "conda activate viral" >> ~/.bashrc
 
 COPY 03-post-conda-step.sh .
 
-RUN ./03-post-conda-step.sh 
+RUN ./03-post-conda-step.sh ${ENVIRONMENT}
 
 WORKDIR /app/scripts
 
