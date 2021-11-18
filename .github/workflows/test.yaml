@@ -9,6 +9,9 @@ jobs:
   readfile:
     name: test
     runs-on: ubuntu-latest
+    outputs:
+      dockerhub_repo: ${{steps.dockerhub.outputs.repo}}
+      dockerhub_image:  ${{steps.dockerhub.outputs.image}}
     steps:
     - uses: actions/checkout@v2
     - name: Read setup file
@@ -21,4 +24,18 @@ jobs:
     - name: parse setup yaml 
       run: |
         echo repo=${{fromJson(env.SETUP_YAML).dockerhub_repo}}
-        echo image=${{fromJson(env.SETUP_YAML).dockerhub_image_name}}
+        echo image=${{fromJson(env.SETUP_YAML).dockerhub_image}}
+    - 
+      name: parse setup yaml 
+      id: dockerhub
+      run: |
+        echo  "::set-output name=repo::${{fromJson(env.SETUP_YAML).dockerhub_repo}}"
+        echo  "::set-output name=image::${{fromJson(env.SETUP_YAML).dockerhub_image}}"
+  usevars:
+    runs-on: ubuntu-latest
+    steps:
+    - run: |
+      echo ${{env.dockerhub_repo}}
+      echo ${{env.dockerhub_image}}
+
+
