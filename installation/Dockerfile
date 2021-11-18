@@ -15,7 +15,7 @@ ENV PATH=/root/miniconda/bin:${PATH}
 COPY 02-create-env.sh environment.yml .
 RUN ./02-create-env.sh ${ENVIRONMENT}
 
-RUN conda init bash
+# RUN conda init bash
 
 COPY 03-post-conda-step.sh .
 RUN ./03-post-conda-step.sh ${ENVIRONMENT}
@@ -25,7 +25,7 @@ WORKDIR /app
 COPY scripts/entrypoint.sh  .
 RUN chmod a+x ./entrypoint.sh
 
-ENTRYPOINT ["/bin/bash", "-c"]
+ENTRYPOINT ["entrypoint.sh"]
 
 CMD ["echo Hello project_template user."]
 
