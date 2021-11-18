@@ -1,4 +1,4 @@
-name: cleanshell-check
+name: test-read-files
 
 on:
   push:
