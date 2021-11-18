@@ -29,9 +29,9 @@ jobs:
       - 
         name: show yaml content
         run: |
-          echo ${{env.SETUP_YAML}}
-          echo ${{fromJson(env.SETUP_YAML).dockerhub_repo}}
-          echo ${{fromJson(env.SETUP_YAML).dockerhub_image}}
+          echo '${{env.SETUP_YAML}}'
+          echo '${{fromJson(env.SETUP_YAML).dockerhub_repo}}'
+          echo '${{fromJson(env.SETUP_YAML).dockerhub_image}}'
       - 
         name: parse setup yaml 
         id: dockerhub
