@@ -49,6 +49,6 @@ popd
 mkdir picard
 pushd picard
 
-curl --output picard.jar https://github.com/broadinstitute/picard/releases/download/2.26.5/picard.jar
+curl -L --output picard.jar https://github.com/broadinstitute/picard/releases/download/2.26.5/picard.jar
 
 popd

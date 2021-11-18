@@ -48,3 +48,7 @@ The current template contains an example of what one might want on in a dockeriz
 3. Add whatever other files you would like to have (analysis scripts, etc.)
 4. Add some tests (for example as a github workflow, so that they will be run on every push.)
 5. Commit and push often so you can see whether there are problems and try to fix them.
+
+
+## Running docker
+???
