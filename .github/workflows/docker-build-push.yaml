@@ -17,18 +17,22 @@ jobs:
       dockerhub_repo: ${{steps.dockerhub.outputs.repo}}
       dockerhub_image:  ${{steps.dockerhub.outputs.image}}
     steps:
-      - uses: actions/checkout@v2
-      - name: Read setup.yaml file
+      - 
+        uses: actions/checkout@v2
+      - 
+        name: Read setup.yaml file
         run: |
           echo 'SETUP_YAML<<EOF' >> $GITHUB_ENV
           cat setup.yaml >> $GITHUB_ENV
           echo 'EOF' >> $GITHUB_ENV
           cat $GITHUB_ENV
-      - name: show yaml content
-        run:|
+      - 
+        name: show yaml content
+        run: |
           echo ${{env.SETUP_YAML}}
           jq <(echo ${{env.SETUP_YAML}})
-      - name: parse setup yaml 
+      - 
+        name: parse setup yaml 
         id: dockerhub
         run: |
           echo  "::set-output name=repo::${{fromJson(env.SETUP_YAML).dockerhub_repo}}"
