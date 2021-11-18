@@ -31,6 +31,12 @@ jobs:
       run: |
         echo  "::set-output name=repo::${{fromJson(env.SETUP_YAML).dockerhub_repo}}"
         echo  "::set-output name=image::${{fromJson(env.SETUP_YAML).dockerhub_image}}"
+    - 
+      name: use var same job
+      run: |
+        echo ${{steps.dockerhub.outputs.repo}}
+        echo ${{steps.dockerhub.outputs.image}}
+
   usevars:
     runs-on: ubuntu-latest
     needs: readfile
