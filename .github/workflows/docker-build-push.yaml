@@ -21,23 +21,23 @@ jobs:
       - 
         uses: actions/checkout@v2
       - 
-        name: Read setup.yaml file
+        name: Read setup.json file
         run: |
-          echo 'SETUP_YAML<<EOF' >> $GITHUB_ENV
-          cat setup.yaml >> $GITHUB_ENV
+          echo 'SETUP_JSON<<EOF' >> $GITHUB_ENV
+          cat setup.json >> $GITHUB_ENV
           echo 'EOF' >> $GITHUB_ENV
           cat $GITHUB_ENV
       - 
-        name: show yaml content
+        name: show json content
         run: |
-          echo '${{env.SETUP_YAML}}'
+          echo '${{env.SETUP_JSON}}'
       - 
-        name: parse setup yaml 
+        name: parse setup json 
         id: dockerhub
         run: |
-          echo  "::set-output name=repo::${{fromJson(env.SETUP_YAML).dockerhub_repo}}"
-          echo  "::set-output name=image::${{fromJson(env.SETUP_YAML).dockerhub_image}}"
-          echo  "::set-output name=conda_env::${{fromJson(env.SETUP_YAML).conda_env}}"
+          echo  "::set-output name=repo::${{fromJson(env.SETUP_JSON).dockerhub_repo}}"
+          echo  "::set-output name=image::${{fromJson(env.SETUP_JSON).dockerhub_image}}"
+          echo  "::set-output name=conda_env::${{fromJson(env.SETUP_JSON).conda_env}}"
       - 
         name: Inject slug/short variables
         uses: rlespinasse/github-slug-action@v3.x
