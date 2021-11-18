@@ -11,16 +11,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Read setup
+    - name: Read setup file
       id: read 
       run: |
         echo 'SETUP_YAML<<EOF' >> $GITHUB_ENV
-        cat .github/workflows/test.yaml.txt >> $GITHUB_ENV
+        cat setup.yaml >> $GITHUB_ENV
         echo 'EOF' >> $GITHUB_ENV
         cat $GITHUB_ENV
-    - name: use setup variables
-      run: echo "${{env.SETUP_YAML}}"
-    - name: parse yaml files
+    - name: parse setup yaml 
       run: |
         echo repo=${{fromJson(env.SETUP_YAML).dockerhub_repo}}
         echo image=${{fromJson(env.SETUP_YAML).dockerhub_image_name}}
