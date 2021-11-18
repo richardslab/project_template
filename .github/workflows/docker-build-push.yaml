@@ -14,9 +14,9 @@ jobs:
       date: ${{ steps.date.outputs.value }}
       branch_tag: ${{ steps.branch.outputs.value }}
       tag: ${{ steps.tags.outputs.value }}
-      dockerhub_repo: ${{steps.dockerhub.outputs.repo}}
-      dockerhub_image:  ${{steps.dockerhub.outputs.image}}
-      conda_env: ${{steps.dockerhub.outputs.conda_env}}
+      dockerhub_repo: ${{steps.setup.outputs.repo}}
+      dockerhub_image:  ${{steps.setup.outputs.image}}
+      conda: ${{steps.setup.outputs.conda}}
     steps:
       - 
         uses: actions/checkout@v2
@@ -33,11 +33,11 @@ jobs:
           echo '${{env.SETUP_JSON}}'
       - 
         name: parse setup json 
-        id: dockerhub
+        id: setup
         run: |
           echo  "::set-output name=repo::${{fromJson(env.SETUP_JSON).dockerhub_repo}}"
           echo  "::set-output name=image::${{fromJson(env.SETUP_JSON).dockerhub_image}}"
-          echo  "::set-output name=conda_env::${{fromJson(env.SETUP_JSON).conda_env}}"
+          echo  "::set-output name=conda::${{fromJson(env.SETUP_JSON).conda_env}}"
       - 
         name: Inject slug/short variables
         uses: rlespinasse/github-slug-action@v3.x
@@ -48,11 +48,11 @@ jobs:
       - 
         name: Get Branch tag
         id: branch
-        run: echo "::set-output name=value::${{steps.dockerhub.outputs.repo}}/${{steps.dockerhub.outputs.image}}:${{steps.date.outputs.value}}_${{env.GITHUB_REF_SLUG}}"
+        run: echo "::set-output name=value::${{steps.setup.outputs.repo}}/${{steps.setup.outputs.image}}:${{steps.date.outputs.value}}_${{env.GITHUB_REF_SLUG}}"
       - 
         name: Get Latest tag
         id: latest
-        run: echo "::set-output name=value::${{steps.dockerhub.outputs.repo}}/${{steps.dockerhub.outputs.image}}:latest"
+        run: echo "::set-output name=value::${{steps.setup.outputs.repo}}/${{steps.setup.outputs.image}}:latest"
       - 
         uses: haya14busa/action-cond@v1
         id: tags
@@ -103,7 +103,7 @@ jobs:
           echo tags = ${{ needs.variables.outputs.tag }}
           echo branch = ${{ needs.variables.outputs.branch_tag }}
           echo hash = ${{ steps.hash.outputs.hash }}
-          echo conda_env = ${{ steps.variables.outputs.conda_env }}
+          echo conda = ${{ needs.variables.outputs.conda }}
           echo github.workspace = ${{ github.workspace }}
       -
         name: Build and push branch
@@ -113,7 +113,7 @@ jobs:
           push: true
           build-args: |
             GITHUB_PAT=${{ secrets.PAT_GITHUB }} 
-            ENVIRONMENT=${{needs.variables.outputs.conda_env}}
+            ENVIRONMENT=${{ needs.variables.outputs.conda }}
           tags: ${{ needs.variables.outputs.tag }}
           builder: ${{ steps.buildx.outputs.name }}
           cache-from: type=local,mode=max,src=/tmp/.buildx-cache
