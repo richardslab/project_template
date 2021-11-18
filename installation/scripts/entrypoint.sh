@@ -3,5 +3,5 @@
 if [ $# -eq 0 ]; then 
 	bash
 else 
-	echo $@
+	echo "$@"
 fi

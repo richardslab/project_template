@@ -1,6 +1,6 @@
 # ref https://github.com/tebeka/pythonwise/blob/master/docker-miniconda/Dockerfile
 FROM ubuntu:18.04
-ENV ENVIRONMENT=project_name
+ARG ENVIRONMENT=project_name
 
 
 WORKDIR /home/
@@ -34,7 +34,7 @@ WORKDIR /app/scripts
 
 COPY scripts/*  .
 
-ENTRYPOINT ["conda", "run", "-n", "${ENVIRONMENT}", "--no-capture-output", "entrypoint.sh"]
+ENTRYPOINT ["conda", "run", "-n", ${ENVIRONMENT}, "--no-capture-output", "entrypoint.sh"]
 
 CMD ["Whats up?"]
 
