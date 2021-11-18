@@ -15,7 +15,7 @@ jobs:
       branch_tag: ${{ steps.branch.outputs.value }}
       tag: ${{ steps.tags.outputs.value }}
       dockerhub_repo: ${{steps.dockerhub.outputs.repo}}
-      dockerhub_image_name:  ${{steps.dockerhub.outputs.image}}
+      dockerhub_image:  ${{steps.dockerhub.outputs.image}}
     steps:
       - uses: actions/checkout@v2
       - name: Read setup.yaml file
@@ -24,6 +24,10 @@ jobs:
           cat setup.yaml >> $GITHUB_ENV
           echo 'EOF' >> $GITHUB_ENV
           cat $GITHUB_ENV
+      - name: show yaml content
+        run:|
+          echo ${{env.SETUP_YAML}}
+          jq <(echo ${{env.SETUP_YAML}})
       - name: parse setup yaml 
         id: dockerhub
         run: |
