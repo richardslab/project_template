@@ -2,9 +2,9 @@
 
 BASEDIR="$(dirname "$0")"
 
-ENV=$1
+ENV="$1"
 
-echo ENV=$ENV
+echo ENV="$ENV"
 
 
 # shellcheck source=/dev/null
