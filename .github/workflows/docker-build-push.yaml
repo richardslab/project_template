@@ -8,9 +8,6 @@ on:
     branches:
       - '*'
 jobs:
-  env:
-    dockerhub_repo: ""
-    dockerhub_image_name: ""
   variables:
     runs-on: ubuntu-latest
     outputs:
