@@ -1,3 +1,4 @@
+# change this to include the packages you need 
 channels:
   - conda-forge
   - bioconda
@@ -5,9 +6,9 @@ dependencies:
   - openjdk=8.0.152
   - bwa==0.7.17
   - samtools==1.14
-  - r-base
-  - r-essentials
-  - r-renv
+  - r-base==4.1.1  
+  - r-essentials=4.1
+  - r-renv=0.14.0 
   - python=3.6
   - bioconda::tabix==1.11
   - ghostscript==9.54.0

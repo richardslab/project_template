@@ -40,5 +40,11 @@ You'll also have to modify the dockerhub repository and image that the CI (conti
 5. Push your commits back to github and you should see in the "Actions" tab a few jobs starting up. Once they turn green you should be able to pull the docker image and use it!
 
 
-## Using the docker image
+## Personalizing the sofware
+The current template contains an example of what one might want on in a dockerized conda environment, plus a few other things that cannot be easily installed via conda. Your project will probably want to have other things in it...
 
+1. Update installation/environment.yml to include those packages/versions that you want. 
+2. Update installation/03-post-conda-step.sh and use it to install/download software that you'd like installed but not via conda.
+3. Add whatever other files you would like to have (analysis scripts, etc.)
+4. Add some tests (for example as a github workflow, so that they will be run on every push.)
+5. Commit and push often so you can see whether there are problems and try to fix them.

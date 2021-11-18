@@ -20,6 +20,8 @@ set -euo pipefail
 conda info 
 conda list
 
+## all the commands below can be removed or changed to include the software/files you need but cannot install via 
+## conda.
 
 git clone https://github.com/lindenb/jvarkit.git
 pushd jvarkit
