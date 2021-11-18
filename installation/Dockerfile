@@ -34,9 +34,9 @@ WORKDIR /app/scripts
 
 COPY scripts/*  .
 
-ENTRYPOINT ["conda", "run", "-n", "${ENVIRONMENT}", "--no-capture-output", "/bin/bash"]
+ENTRYPOINT ["conda", "run", "-n", "${ENVIRONMENT}", "--no-capture-output", "entrypoint.sh"]
 
-CMD ["echo 'hi!'"]
+CMD ["Whats up?"]
 
 WORKDIR /app/installation
 COPY Dockerfile .
