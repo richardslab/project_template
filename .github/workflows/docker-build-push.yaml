@@ -16,6 +16,7 @@ jobs:
       tag: ${{ steps.tags.outputs.value }}
       dockerhub_repo: ${{steps.dockerhub.outputs.repo}}
       dockerhub_image:  ${{steps.dockerhub.outputs.image}}
+      conda_env: ${{steps.dockerhub.outputs.conda_env}}
     steps:
       - 
         uses: actions/checkout@v2
@@ -30,14 +31,13 @@ jobs:
         name: show yaml content
         run: |
           echo '${{env.SETUP_YAML}}'
-          echo 'dockerhub_repo=${{fromJson(env.SETUP_YAML).dockerhub_repo}}'
-          echo 'dockerhub_image=${{fromJson(env.SETUP_YAML).dockerhub_image}}'
       - 
         name: parse setup yaml 
         id: dockerhub
         run: |
           echo  "::set-output name=repo::${{fromJson(env.SETUP_YAML).dockerhub_repo}}"
           echo  "::set-output name=image::${{fromJson(env.SETUP_YAML).dockerhub_image}}"
+          echo  "::set-output name=conda_env::${{fromJson(env.SETUP_YAML).conda_env}}"
       - 
         name: Inject slug/short variables
         uses: rlespinasse/github-slug-action@v3.x
@@ -103,6 +103,7 @@ jobs:
           echo tags = ${{ needs.variables.outputs.tag }}
           echo branch = ${{ needs.variables.outputs.branch_tag }}
           echo hash = ${{ steps.hash.outputs.hash }}
+          echo conda_env = ${{ steps.variables.outputs.conda_env }}
           echo github.workspace = ${{ github.workspace }}
       -
         name: Build and push branch
@@ -112,6 +113,7 @@ jobs:
           push: true
           build-args: |
             GITHUB_PAT=${{ secrets.PAT_GITHUB }} 
+            ENVIRONMENT=${{needs.variables.outputs.conda_env}}
           tags: ${{ needs.variables.outputs.tag }}
           builder: ${{ steps.buildx.outputs.name }}
           cache-from: type=local,mode=max,src=/tmp/.buildx-cache
@@ -135,7 +137,7 @@ jobs:
           script_prefix: ""
           shell: ""
           quote_argument: false
-          run: local/samples.fasta local/result
+          run: "input1" "input2"
       - 
         name: list files
         run: ls -R ${{ github.workspace }}/test

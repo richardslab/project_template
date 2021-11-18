@@ -30,13 +30,14 @@ COPY 03-post-conda-step.sh .
 
 RUN ./03-post-conda-step.sh ${ENVIRONMENT}
 
-WORKDIR /app/scripts
+WORKDIR /app
 
-COPY scripts/*  .
+COPY scripts/entrypoint.sh  .
+RUN chmod a+x ./entrypoint.sh
 
 ENTRYPOINT ["conda", "run", "-n", ${ENVIRONMENT}, "--no-capture-output", "entrypoint.sh"]
 
-CMD ["Whats up?"]
+CMD ["Hello project_template user."]
 
 WORKDIR /app/installation
 COPY Dockerfile .
