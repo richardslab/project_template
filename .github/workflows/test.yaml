@@ -22,5 +22,5 @@ jobs:
       run: echo "${{env.SETUP_YAML}}"
     - name: parse yaml files
       run: |
-        echo repo=${{toJson(env.SETUP_YAML).dockerhub_repo}}
-        echo image=${{toJson(env.SETUP_YAML).dockerhub_image_name}}
+        echo repo=${{fromJson(env.SETUP_YAML).dockerhub_repo}}
+        echo image=${{fromJson(env.SETUP_YAML).dockerhub_image_name}}
