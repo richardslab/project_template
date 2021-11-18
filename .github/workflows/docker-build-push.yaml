@@ -138,7 +138,7 @@ jobs:
           shell: ""
           quote_argument: false
           run: echo hello
-       -
+      -
         name: test empty run 
         uses: yfarjoun/docker-run-action@yf_optional_quote_input
         with:
