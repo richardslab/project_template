@@ -137,7 +137,7 @@ jobs:
           script_prefix: ""
           shell: ""
           quote_argument: false
-        run: "input1" "input2"
+          run: input1 input2
       - 
         name: list files
         run: ls -R ${{ github.workspace }}/test
