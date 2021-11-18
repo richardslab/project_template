@@ -1,0 +1,21 @@
+name: cleanshell-check
+
+on:
+  push:
+    branch:
+      - ['**']
+
+jobs:
+  shellcheck:
+    name: test
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Read setup
+        id: read 
+        run: |
+          echo 'SETUP_YAML<<EOF' >> $GITHUB_ENV
+          cat test.yaml.txt >> $GITHUB_ENV
+          echo 'EOF' >> $GITHUB_ENV
+    - name: use setup variables
+      run: echo "${{env.SETUP_YAML}}"
