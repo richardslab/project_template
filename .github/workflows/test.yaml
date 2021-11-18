@@ -20,3 +20,7 @@ jobs:
         cat $GITHUB_ENV
     - name: use setup variables
       run: echo "${{env.SETUP_YAML}}"
+    - name: parse yaml files
+      run: |
+        echo repo=${{toJson(env.SETUP_YAML).dockerhub_repo}}
+        echo image=${{toJson(env.SETUP_YAML).dockerhub_image_name}}
