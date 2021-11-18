@@ -30,8 +30,8 @@ jobs:
         name: show yaml content
         run: |
           echo '${{env.SETUP_YAML}}'
-          echo '${{fromJson(env.SETUP_YAML).dockerhub_repo}}'
-          echo '${{fromJson(env.SETUP_YAML).dockerhub_image}}'
+          echo 'dockerhub_repo=${{fromJson(env.SETUP_YAML).dockerhub_repo}}'
+          echo 'dockerhub_image=${{fromJson(env.SETUP_YAML).dockerhub_image}}'
       - 
         name: parse setup yaml 
         id: dockerhub
@@ -48,11 +48,11 @@ jobs:
       - 
         name: Get Branch tag
         id: branch
-        run: echo "::set-output name=value::${{steps.dockerhub.output.repo}}/${{steps.dockerhub.output.image}}:${{steps.date.outputs.value}}_${{env.GITHUB_REF_SLUG}}"
+        run: echo "::set-output name=value::${{steps.dockerhub.outputs.repo}}/${{steps.dockerhub.outputs.image}}:${{steps.date.outputs.value}}_${{env.GITHUB_REF_SLUG}}"
       - 
         name: Get Latest tag
         id: latest
-        run: echo "::set-output name=value::${{steps.dockerhub.output.repo}}/${{steps.dockerhub.output.image}}:latest"
+        run: echo "::set-output name=value::${{steps.dockerhub.outputs.repo}}/${{steps.dockerhub.outputs.image}}:latest"
       - 
         uses: haya14busa/action-cond@v1
         id: tags
