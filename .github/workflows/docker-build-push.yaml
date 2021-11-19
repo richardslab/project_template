@@ -16,7 +16,6 @@ jobs:
       tag: ${{ steps.tags.outputs.value }}
       dockerhub_repo: ${{steps.setup.outputs.repo}}
       dockerhub_image:  ${{steps.setup.outputs.image}}
-      conda: ${{steps.setup.outputs.conda}}
     steps:
       - 
         uses: actions/checkout@v2
@@ -37,7 +36,6 @@ jobs:
         run: |
           echo  "::set-output name=repo::${{fromJson(env.SETUP_JSON).dockerhub_repo}}"
           echo  "::set-output name=image::${{fromJson(env.SETUP_JSON).dockerhub_image}}"
-          echo  "::set-output name=conda::${{fromJson(env.SETUP_JSON).conda_env}}"
       - 
         name: Inject slug/short variables
         uses: rlespinasse/github-slug-action@v3.x
@@ -103,7 +101,6 @@ jobs:
           echo tags = ${{ needs.variables.outputs.tag }}
           echo branch = ${{ needs.variables.outputs.branch_tag }}
           echo hash = ${{ steps.hash.outputs.hash }}
-          echo conda = ${{ needs.variables.outputs.conda }}
           echo github.workspace = ${{ github.workspace }}
       -
         name: Build and push branch
@@ -113,7 +110,6 @@ jobs:
           push: true
           build-args: |
             GITHUB_PAT=${{ secrets.PAT_GITHUB }} 
-            ENVIRONMENT=${{ needs.variables.outputs.conda }}
           tags: ${{ needs.variables.outputs.tag }}
           builder: ${{ steps.buildx.outputs.name }}
           cache-from: type=local,mode=max,src=/tmp/.buildx-cache

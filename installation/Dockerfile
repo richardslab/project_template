@@ -6,18 +6,18 @@ RUN apt-get update && apt-get install -y curl git vim less unzip
 
 WORKDIR /app/
 
-COPY 01-install-conda.sh .
+COPY installation/01-install-conda.sh .
 RUN ./01-install-conda.sh
 
 ENV PATH=/root/miniconda/bin:${PATH}
 
-COPY 02-create-env.sh environment.yml .
+COPY installation/02-create-env.sh environment.yml .
 
 RUN ./02-create-env.sh
 
 # RUN conda init bash
 
-COPY 03-post-conda-step.sh .
+COPY installation/03-post-conda-step.sh .
 RUN ./03-post-conda-step.sh
 
 WORKDIR /app
@@ -29,6 +29,6 @@ ENTRYPOINT ["/app/entrypoint.sh"]
 CMD ["Hello project_template user."]
 
 WORKDIR /app/installation
-COPY Dockerfile .
+COPY installation/Dockerfile .
 
 WORKDIR /app
