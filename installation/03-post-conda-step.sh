@@ -3,8 +3,7 @@
 ## run post-conda steps
 BASEDIR="$(dirname "$0")"
 
-ENV="$1"
-
+ENV="analysis"
 
 echo BASEDIR="$BASEDIR"
 echo RUNNING post-conda steps

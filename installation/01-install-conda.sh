@@ -24,3 +24,6 @@ if [ "$machine" = "Linux" ]; then
 	PATH="${HOME}/miniconda/bin:${PATH}"
 	conda init
 fi
+
+conda update conda
+conda init bash
