@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 
-if [ $# -eq 0 ]; then 
-	bash
-else 
-	echo "$@"
-fi
+echo "in entrypoint.sh"
+
+
+# if [ $# -eq 0 ]; then 
+# 	bash
+# else 
+# 	echo "$@"
+# fi
