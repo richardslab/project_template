@@ -23,11 +23,10 @@ RUN ./03-post-conda-step.sh ${ENVIRONMENT}
 WORKDIR /app
 
 COPY scripts/entrypoint.sh  .
-RUN chmod a+x ./entrypoint.sh
 
-ENTRYPOINT ["entrypoint.sh"]
+ENTRYPOINT ["/app/entrypoint.sh"]
 
-CMD ["echo Hello project_template user."]
+CMD ["Hello project_template user."]
 
 WORKDIR /app/installation
 COPY Dockerfile .
