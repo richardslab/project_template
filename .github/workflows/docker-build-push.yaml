@@ -127,6 +127,7 @@ jobs:
       -
         name: test echo 
         uses: yfarjoun/docker-run-action@yf_optional_quote_input
+        if: always()
         with:
           image: ${{ needs.variables.outputs.branch_tag }}
           options: -v ${{ github.workspace }}/test:/app/local
@@ -136,6 +137,7 @@ jobs:
           run: hello these are the arguments
       -
         name: test empty run 
+        if: always()
         uses: yfarjoun/docker-run-action@yf_optional_quote_input
         with:
           image: ${{ needs.variables.outputs.branch_tag }}
@@ -143,8 +145,43 @@ jobs:
           script_prefix: ""
           shell: ""
           quote_argument: false
+
+      -
+        name: test java
+        uses: yfarjoun/docker-run-action@yf_optional_quote_input
+        if: always()
+        with:
+          image: ${{ needs.variables.outputs.branch_tag }}
+          options: -v ${{ github.workspace }}/test:/app/local
+          script_prefix: -c
+          shell: conda run -n analysis bash
+          quote_argument: true
+          run: java -version
+      -
+        name: test bwa
+        if: always()
+        uses: yfarjoun/docker-run-action@yf_optional_quote_input
+        with:
+          image: ${{ needs.variables.outputs.branch_tag }}
+          options: -v ${{ github.workspace }}/test:/app/local
+          script_prefix: -c
+          shell: conda run -n analysis bwa mem
+          quote_argument: true
+          run: java -version
+      -
+        name: test r
+        if: always()
+        uses: yfarjoun/docker-run-action@yf_optional_quote_input
+        with:
+          image: ${{ needs.variables.outputs.branch_tag }}
+          options: -v ${{ github.workspace }}/test:/app/local
+          script_prefix: ""
+          shell: "conda run -n analysis Rscript"
+          quote_argument: true
+          run: <(echo 'print("hello")')
       - 
         name: list files
+        if: always()
         run: ls -R ${{ github.workspace }}
       
  
