@@ -141,7 +141,7 @@ jobs:
         uses: yfarjoun/docker-run-action@yf_optional_quote_input
         with:
           image: ${{ needs.variables.outputs.branch_tag }}
-          options: -v ${{ github.workspace }}/test:/app/local --entrypoint=/bin/sh
+          options: -v ${{ github.workspace }}/test:/app/local --entrypoint=/bin/bash
           script_prefix: -c
           shell: conda run -n analysis /bin/bash
           quote_argument: true
@@ -153,7 +153,7 @@ jobs:
         if: always()
         with:
           image: ${{ needs.variables.outputs.branch_tag }}
-          options: -v ${{ github.workspace }}/test:/app/local --entrypoint=/bin/sh
+          options: -v ${{ github.workspace }}/test:/app/local --entrypoint=/bin/bash
           script_prefix: -c
           shell: conda run -n analysis /bin/bash
           quote_argument: true
@@ -164,7 +164,7 @@ jobs:
         uses: yfarjoun/docker-run-action@yf_optional_quote_input
         with:
           image: ${{ needs.variables.outputs.branch_tag }}
-          options: -v ${{ github.workspace }}/test:/app/local --entrypoint=/bin/sh
+          options: -v ${{ github.workspace }}/test:/app/local --entrypoint=/bin/bash
           script_prefix: 
           shell: conda run -n analysis 
           quote_argument: false
@@ -175,7 +175,7 @@ jobs:
         uses: yfarjoun/docker-run-action@yf_optional_quote_input
         with:
           image: ${{ needs.variables.outputs.branch_tag }}
-          options: -v ${{ github.workspace }}/test:/app/local --entrypoint=/bin/sh
+          options: -v ${{ github.workspace }}/test:/app/local --entrypoint=/bin/bash
           script_prefix: ""
           shell: conda run -n analysis Rscript
           quote_argument: true
