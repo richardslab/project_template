@@ -22,4 +22,5 @@ mamba env update -n "${ENV}" -q \
 
 echo CREATED the environment "${ENV}"
 
+conda init bash
 echo "conda activate \"${ENV}\"" >> ~/.bashrc

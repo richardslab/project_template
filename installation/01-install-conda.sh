@@ -26,4 +26,3 @@ if [ "$machine" = "Linux" ]; then
 fi
 
 conda update conda
-conda init bash
