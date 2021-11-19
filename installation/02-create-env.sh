@@ -2,10 +2,7 @@
 
 BASEDIR="$(dirname "$0")"
 
-ENV="$1"
-
-echo ENV="$ENV"
-
+ENV="analysis"
 
 # shellcheck source=/dev/null
 set +eu \

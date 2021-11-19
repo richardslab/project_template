@@ -1,5 +1,4 @@
 {
    "dockerhub_repo": "richardslab",
-   "dockerhub_image": "project_template",
-   "conda_env": "analysis"
+   "dockerhub_image": "project_template"
 }

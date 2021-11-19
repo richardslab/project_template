@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 echo "in entrypoint.sh"
 
+conda activate analysis
+
 if [ $# -eq 0 ]; then 
-	echo "bash starting up, please be patient."
 	bash
 else 
 	echo "$@"

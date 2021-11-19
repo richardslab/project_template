@@ -28,19 +28,17 @@ You'll also have to modify the dockerhub repository and image that the CI (conti
 ```json
 {
    "dockerhub_repo": "richardslab",
-   "dockerhub_image": "project_template",
-   "conda_env": "analysis"
+   "dockerhub_image": "project_template"
 }
 
 
 ```
 2. Edit the values (not keys) in this dictionary. make sure that there's a newline after the final `}` or you'll get strange errors. 
-3. (optional) change the value of the "conda_env" from "analysis" to whatever you want. This value will be the name of the conda environment that will contain all your programs.
-4. Save and file and commit it. 
-5. Push your commits back to github and you should see in the "Actions" tab a few jobs starting up. Once they turn green you should be able to pull the docker image and use it!
+3. Save and file and commit it. 
+4. Push your commits back to github and you should see in the "Actions" tab a few jobs starting up. Once they turn green you should be able to pull the docker image and use it!
 
 
-## Personalizing the sofware
+## Personalizing the software
 The current template contains an example of what one might want on in a dockerized conda environment, plus a few other things that cannot be easily installed via conda. Your project will probably want to have other things in it...
 
 1. Update installation/environment.yml to include those packages/versions that you want. 
