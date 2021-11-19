@@ -1,5 +1,4 @@
 FROM ubuntu:18.04
-ARG ENVIRONMENT=project_name
 
 WORKDIR /home/
 # System packages 
@@ -13,12 +12,13 @@ RUN ./01-install-conda.sh
 ENV PATH=/root/miniconda/bin:${PATH}
 
 COPY 02-create-env.sh environment.yml .
-RUN ./02-create-env.sh ${ENVIRONMENT}
+
+RUN ./02-create-env.sh
 
 # RUN conda init bash
 
 COPY 03-post-conda-step.sh .
-RUN ./03-post-conda-step.sh ${ENVIRONMENT}
+RUN ./03-post-conda-step.sh
 
 WORKDIR /app
 
