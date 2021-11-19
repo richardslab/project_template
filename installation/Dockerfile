@@ -11,7 +11,7 @@ RUN ./01-install-conda.sh
 
 ENV PATH=/root/miniconda/bin:${PATH}
 
-COPY installation/02-create-env.sh environment.yml .
+COPY installation/02-create-env.sh environment/environment.yml .
 
 RUN ./02-create-env.sh
 
