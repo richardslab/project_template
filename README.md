@@ -41,12 +41,65 @@ You'll also have to modify the dockerhub repository and image that the CI (conti
 ## Personalizing the software
 The current template contains an example of what one might want on in a dockerized conda environment, plus a few other things that cannot be easily installed via conda. Your project will probably want to have other things in it...
 
-1. Update installation/environment.yml to include those packages/versions that you want. 
+1. Update environment/environment.yml to include those packages/versions that you want. 
 2. Update installation/03-post-conda-step.sh and use it to install/download software that you'd like installed but not via conda.
 3. Add whatever other files you would like to have (analysis scripts, etc.)
 4. Add some tests (for example as a github workflow, so that they will be run on every push.)
 5. Commit and push often so you can see whether there are problems and try to fix them.
 
+## Editing the entrypoint.sh
+The file `entrypoint.sh` is currently set up to be run by docker with whatever arguments you give the docker command. It is currently setup to simply echo the arguments back at you, admittedly, not a very useful analysis. You probably have better ideas you'd like to implement and entrypoint.sh is your gateway!
 
-## Running docker
-???
+## Running docker.
+To use the docker image you've created you'll need to pull it from dockerhub:
+```bash
+docker pull richardslab/project_template:latest
+```
+(You'll probably want to replace "richardslab" and "project_template" with the values youve put into the setup.json file. `latest` is a default tag that points to the last image that was uploaded. you can also use a specific tag if you want.)
+
+and then run it. 
+
+### Default Entrypoint
+You can run it with the default entry point:
+```bash
+docker run --rm richardslab/project_template:latest arg1 arg2 arg3
+```
+which will (in this case) simply echo:
+
+```
+arg1 arg2 arg3
+```
+
+### Modify the Entrypoint
+You can also change the entrypoint:
+```bash
+docker run  --rm --entrypoint=conda richardslab/project_template run -n analysis bwa mem
+```
+in this case I've changed the entrypoint to "conda" and as arguments I've told conda to run "bwa mem" in the analysis environment.
+
+### Interactive mode
+Finally if you are looking for an interactive session you can also get that:
+```bash
+docker run  --rm -it --entrypoint=/bin/bash richardslab/project_template 
+```
+
+Note that in this docker image, when bash is started up in an interative mode, it will initialize the analysis conda environment automatically, so (a) it takes several seconds to start-up, and (b) your prompt will show this:
+```
+(analysis) root@0fdbe03ad320:/app# 
+```
+at this point you should have access to all the software that you installed in the image.
+
+### Mounting local drives
+You probably want to use the docker image to analyse some data that you have on your local computer, and eventually have access to the results.... for this you'll have to mount one (or more) of your directories. For example, if you want to mount the current directory and have it available in the docker at location '/local' you can do it like so:
+
+```bash
+docker run  --rm --entrypoint=/bin/bash -v$(pwd):/local richardslab/project_template -c 'echo test > /local/helloworld.txt'
+```
+look for the file helloworld.txt in your current directory.
+
+Running bash like this will not activate your conda environment. To do that we would need to run conda:
+```bash
+docker run  --rm --entrypoint=conda  -v$(pwd):/local  richardslab/project_template run -n analysis bwa mem '2>' /local/helloworld.txt
+```
+
+Note that the `>` needs to be escaped so that the current shell doesn't interpret it....
