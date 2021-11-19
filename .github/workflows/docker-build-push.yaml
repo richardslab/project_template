@@ -136,15 +136,16 @@ jobs:
           quote_argument: false
           run: hello these are the arguments
       -
-        name: test empty run 
+        name: test run conda 
         if: always()
         uses: yfarjoun/docker-run-action@yf_optional_quote_input
         with:
           image: ${{ needs.variables.outputs.branch_tag }}
           options: -v ${{ github.workspace }}/test:/app/local
-          script_prefix: ""
-          shell: ""
-          quote_argument: false
+          script_prefix: "-c"
+          shell: "conda run -n analysis /bin/bash"
+          quote_argument: true
+          run: echo hello world
 
       -
         name: test java
@@ -154,7 +155,7 @@ jobs:
           image: ${{ needs.variables.outputs.branch_tag }}
           options: -v ${{ github.workspace }}/test:/app/local
           script_prefix: -c
-          shell: conda run -n analysis bash
+          shell: conda run -n analysis /bin/bash
           quote_argument: true
           run: java -version
       -
