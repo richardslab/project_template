@@ -157,7 +157,7 @@ jobs:
           script_prefix: -c
           shell: /bin/bash
           quote_argument: true
-          run: bwa 2>&1 |  grep -e ''^Version'' |  sed ''s/Version: //''
+          run: bwa 2>&1 |  grep -e ''^Version'' |  sed ''s/Version:\ //''
       -
         name: test python as shell
         if: always()
