@@ -125,18 +125,7 @@ jobs:
         name: list files
         run: ls -R ${{ github.workspace }}
       -
-        name: test echo 
-        uses: yfarjoun/docker-run-action@yf_optional_quote_input
-        if: always()
-        with:
-          image: ${{ needs.variables.outputs.branch_tag }}
-          options: -v ${{ github.workspace }}/test:/app/local
-          script_prefix: ""
-          shell: ""
-          quote_argument: false
-          run: hello these are the arguments
-      -
-        name: test run conda 
+        name: test echo  
         if: always()
         uses: yfarjoun/docker-run-action@yf_optional_quote_input
         with:
@@ -159,7 +148,7 @@ jobs:
           quote_argument: true
           run: java -version
       -
-        name: test bwa
+        name: test get bwa version
         if: always()
         uses: yfarjoun/docker-run-action@yf_optional_quote_input
         with:
@@ -168,18 +157,18 @@ jobs:
           script_prefix: -c
           shell: /bin/bash
           quote_argument: true
-          run: bwa mem  
+          run: bwa 2>&1 |  grep -e '^Version' |  sed 's/Version: //'
       -
-        name: test r
+        name: test python as shell
         if: always()
         uses: yfarjoun/docker-run-action@yf_optional_quote_input
         with:
           image: ${{ needs.variables.outputs.branch_tag }}
           options: -v ${{ github.workspace }}/test:/app/local 
           script_prefix: "-c"
-          shell: /bin/bash
+          shell: python
           quote_argument: true
-          run: Rscript <(echo 'print("hello")')
+          run: print("hello")
       - 
         name: list files
         if: always()
