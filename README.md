@@ -48,34 +48,34 @@ The current template contains an example of what one might want on in a dockeriz
 5. Commit and push often so you can see whether there are problems and try to fix them.
 
 ## Editing the entrypoint.sh
-The file `entrypoint.sh` is currently set up to be run by docker with whatever arguments you give the docker command. It is currently setup to simply echo the arguments back at you, admittedly, not a very useful analysis. You probably have better ideas you'd like to implement and entrypoint.sh is your gateway!
+The file `entrypoint.sh` is currently set up to be run by docker with whatever arguments you give the docker command. It is currently setup to run the command you give it under the the conda environment. Please note that it takes about 5 seconds for the conda environment to be setup.
 
 ## Running docker.
 To use the docker image you've created you'll need to pull it from dockerhub:
 ```bash
 docker pull richardslab/project_template:latest
 ```
-(You'll probably want to replace "richardslab" and "project_template" with the values youve put into the setup.json file. `latest` is a default tag that points to the last image that was uploaded. you can also use a specific tag if you want.)
+(You'll probably want to replace "richardslab" and "project_template" with the values you've put into the setup.json file. `latest` is a default tag that points to the last image that was uploaded. you can also use a specific tag if you want.)
 
 and then run it. 
 
 ### Default Entrypoint
 You can run it with the default entry point:
 ```bash
-docker run --rm richardslab/project_template:latest arg1 arg2 arg3
+docker run --rm richardslab/project_template:latest echo hello world
 ```
 which will (in this case) simply echo:
 
 ```
-arg1 arg2 arg3
+hello world
 ```
 
 ### Modify the Entrypoint
 You can also change the entrypoint:
 ```bash
-docker run  --rm --entrypoint=conda richardslab/project_template run -n analysis bwa mem
+docker run  --rm --entrypoint=/bin/bash richardslab/project_template conda list 
 ```
-in this case I've changed the entrypoint to "conda" and as arguments I've told conda to run "bwa mem" in the analysis environment.
+in this case I've changed the entrypoint to bash which will not intialize the conda environment and so you'll only see the packages that are available in the "base" env. if you try to run bwa or java with this entrypoint, it will fail because it's not run inside the conda environment.
 
 ### Interactive mode
 Finally if you are looking for an interactive session you can also get that:
@@ -93,13 +93,13 @@ at this point you should have access to all the software that you installed in t
 You probably want to use the docker image to analyse some data that you have on your local computer, and eventually have access to the results.... for this you'll have to mount one (or more) of your directories. For example, if you want to mount the current directory and have it available in the docker at location '/local' you can do it like so:
 
 ```bash
-docker run  --rm --entrypoint=/bin/bash -v$(pwd):/local richardslab/project_template -c 'echo test > /local/helloworld.txt'
+docker run  --rm -v$(pwd):/local richardslab/project_template -c 'echo test > /local/helloworld.txt'
 ```
-look for the file helloworld.txt in your current directory.
+now look for the file helloworld.txt in your current directory.
 
-Running bash like this will not activate your conda environment. To do that we would need to run conda:
+Or you coudl try to run soemthing from the conda environment:
 ```bash
-docker run  --rm --entrypoint=conda  -v$(pwd):/local  richardslab/project_template run -n analysis bwa mem '2>' /local/helloworld.txt
+docker run  --rm -v$(pwd):/local richardslab/project_template bwa mem '2>' /local/helloworld.txt
 ```
 
-Note that the `>` needs to be escaped so that the current shell doesn't interpret it....
+Note that the `2>` (redirecting the stderr to a file) needs to be escaped so that the current shell (the one in which you are invoking docker) doesn't interpret it....

@@ -157,6 +157,8 @@ jobs:
           script_prefix: -c
           shell: /bin/bash
           quote_argument: true
+          # you have to escape the space that follows the colon character because otherwise it breaks the yaml....
+          # also not that the double single-quotes will be converted into single single-quotes....
           run: bwa 2>&1 |  grep -e ''^Version'' |  sed ''s/Version:\ //''
       -
         name: test python as shell
