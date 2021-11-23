@@ -157,7 +157,7 @@ jobs:
           script_prefix: -c
           shell: /bin/bash
           quote_argument: true
-          run: bwa 2>&1 |  grep -e '^Version' |  sed 's/Version: //'
+          run: bwa 2>&1 |  grep -e ''^Version'' |  sed ''s/Version: //''
       -
         name: test python as shell
         if: always()
@@ -165,7 +165,7 @@ jobs:
         with:
           image: ${{ needs.variables.outputs.branch_tag }}
           options: -v ${{ github.workspace }}/test:/app/local 
-          script_prefix: "-c"
+          script_prefix: -c
           shell: python
           quote_argument: true
           run: print("hello")
