@@ -141,9 +141,9 @@ jobs:
         uses: yfarjoun/docker-run-action@yf_optional_quote_input
         with:
           image: ${{ needs.variables.outputs.branch_tag }}
-          options: -v ${{ github.workspace }}/test:/app/local --entrypoint=/bin/bash
+          options: -v ${{ github.workspace }}/test:/app/local
           script_prefix: -c
-          shell: conda run -n analysis /bin/bash
+          shell: /bin/bash
           quote_argument: true
           run: echo hello world
 
@@ -153,9 +153,9 @@ jobs:
         if: always()
         with:
           image: ${{ needs.variables.outputs.branch_tag }}
-          options: -v ${{ github.workspace }}/test:/app/local --entrypoint=/bin/bash
+          options: -v ${{ github.workspace }}/test:/app/local 
           script_prefix: -c
-          shell: conda run -n analysis /bin/bash
+          shell: /bin/bash
           quote_argument: true
           run: java -version
       -
@@ -164,22 +164,22 @@ jobs:
         uses: yfarjoun/docker-run-action@yf_optional_quote_input
         with:
           image: ${{ needs.variables.outputs.branch_tag }}
-          options: -v ${{ github.workspace }}/test:/app/local --entrypoint=/bin/bash
-          script_prefix: 
-          shell: conda run -n analysis 
-          quote_argument: false
-          run: java -version
+          options: -v ${{ github.workspace }}/test:/app/local
+          script_prefix: -c
+          shell: /bin/bash
+          quote_argument: true
+          run: bwa mem  
       -
         name: test r
         if: always()
         uses: yfarjoun/docker-run-action@yf_optional_quote_input
         with:
           image: ${{ needs.variables.outputs.branch_tag }}
-          options: -v ${{ github.workspace }}/test:/app/local --entrypoint=/bin/bash
-          script_prefix: ""
-          shell: conda run -n analysis Rscript
+          options: -v ${{ github.workspace }}/test:/app/local 
+          script_prefix: "-c"
+          shell: /bin/bash
           quote_argument: true
-          run: <(echo 'print("hello")')
+          run: Rscript <(echo 'print("hello")')
       - 
         name: list files
         if: always()
